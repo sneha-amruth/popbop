@@ -1,0 +1,26 @@
+.card {
+    border: none;
+    width: 24rem;
+    height: 24rem;
+    margin: 1.5rem;
+    
+  }
+  .card img {
+    position: relative;
+  }
+  .card-content {
+    text-align: center;
+    position: relative;
+    bottom: 1.2rem;
+  }
+  .thumbnail {
+   
+    max-height: 18rem;
+  }
+  .card-content * {
+    padding: 0.1rem;
+  }
+  .card-content button {
+    padding: 0.4rem;
+    margin-top: 0.4rem;
+  }
