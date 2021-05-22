@@ -1,19 +1,19 @@
 import videosList from "../../Database";
 import VideosListing from "../Videos/VideosListing";
+import "./Home.css";
 
 export default function Home(){
     
     return (
-        <>
-            <h1>Home</h1>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="all-videos-conatiner">
+        <div className="videos-list">
         {videosList.map(
          video => (
             <VideosListing value={video}/>
           )
         )}
       </div>
-        </>
+      </div>
     )
 }
 

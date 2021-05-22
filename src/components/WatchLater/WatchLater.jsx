@@ -3,7 +3,7 @@ import VideosListing from "../Videos/VideosListing";
 import  videosList  from "../../Database";
 
 export default function LikedVideos(){
-  const { likedVideosId } = usePlaylist();
+  const { watchLaterVideosId } = usePlaylist();
     
   const getVideoObject = (videoId) => {
       return videosList.filter(video => video.id === videoId);
@@ -11,11 +11,11 @@ export default function LikedVideos(){
 
     return <div className="all-videos-conatiner">
         <div className="videos-list">
-          {likedVideosId.length === 0 ? <div className="no-videos">You've not liked any videos yet!</div> :
-            likedVideosId.map(videoId => (
+          {watchLaterVideosId.length === 0 ? <div className="no-videos">No videos in this playlist yet!</div> :
+            watchLaterVideosId.map(videoId => (
               <VideosListing key={videoId} value={getVideoObject(videoId)[0]}/>
              )) 
            }
        </div>
-      </div> 
+            </div> 
 }

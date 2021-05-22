@@ -1,20 +1,38 @@
+.video-card {
+  text-decoration: none;
+  color: var( --text-primary);
+}
 .card {
     border: none;
-    width: 24rem;
-    height: 24rem;
-    margin: 1.5rem;
-    
+    width: 22.8rem;
+    height: 20rem;
+    margin: 0.7rem;
   }
   .card img {
     position: relative;
   }
   .card-content {
-    text-align: center;
+    display: flex;
     position: relative;
-    bottom: 1.2rem;
+    top: -2.5rem;
+  }
+  /* .card-content img {
+    max-width: 4rem;
+    max-height: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+  } */
+  .channel-details {
+    text-align: left;
+    margin-left: -1rem;
+  }
+  
+  .channel-details-footer {
+    color: var(--text-secondary);
+    position: relative;
+    left: 0.3rem;
   }
   .thumbnail {
-   
     max-height: 18rem;
   }
   .card-content * {
@@ -24,3 +42,12 @@
     padding: 0.4rem;
     margin-top: 0.4rem;
   }
+
+@media only screen and (max-width: 600px) {
+  .card {
+    border: none;
+    width: 25.7rem;
+    height: 25rem;
+    margin: 0;
+  }
+}

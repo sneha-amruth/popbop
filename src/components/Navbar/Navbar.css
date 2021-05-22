@@ -1,0 +1,75 @@
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+    position: fixed;
+    top: 0;
+    width: 100%; 
+}
+.logo {
+    max-width: 50rem;
+    max-height: 10rem;
+    position: relative; 
+    left: 1rem;
+}
+.brand-name {
+    font-family: 'Pattaya', sans-serif;
+    color: var(--white);
+    font-size: 2rem;
+    position: relative;
+    left: 4rem;
+    top: 0.6rem;
+}
+.logo img{
+    width: 15rem;
+    padding: 0;
+    position: absolute;
+    left: -5rem;
+    top: -4.6rem;
+}
+.top-nav .search-box {
+    align-self: center;
+    border: 0.2px solid var(--grey);
+    padding: 0.5rem;
+    width: 36rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    background-color: var(--text-primary-inverse);
+}
+
+.search-icon {
+    color: var(--white);
+}
+.top-nav .nav-links {
+    padding-top: 1.2rem ;
+}
+.top-nav .nav-icons {
+    color: var(--white);
+    margin: 1.4rem;
+    text-decoration: none;
+    font-size: 1rem;
+}
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 14rem;
+    position: fixed;
+    top: 6rem;
+    width: 100%;
+}
+.side-nav .nav-icons  {
+    color: var(--icon-inactive);
+    margin: 1.2rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: flex;
+}
+.side-nav .nav-icons-active {
+    color: var(--white);
+  
+}
+.side-nav .nav-name{
+    margin-left: 1.8rem;
+    color: var(--white);
+}

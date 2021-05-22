@@ -1,0 +1,104 @@
+.requiredError {
+    font-size: 0.9rem;
+    align-self: flex-start;
+    color: red;
+}
+.modal {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-top: 170px;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-transition: 0.5s;
+  overflow: auto;
+  transition: all 0.3s linear;
+}
+.modal-content {
+    background-color: var(--background-primary);
+    margin: auto;
+    padding: 8px;
+    border-radius: 4px;
+    max-width: 260px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid var(--text-secondary);
+}
+.modal-header .title {
+    font-size: 1rem;
+    padding: 1rem;
+}
+.modal-list {
+    display: flex;
+    overflow-y: scroll;
+    font-size: 1.1rem;
+    position: relative;
+}
+ .checkbox-container {
+    position: relative;
+    left: 2rem;
+}
+.checkbox-container input {
+    cursor: pointer;
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.modal-list label {
+    position: absolute;
+    left: 4rem;
+}
+.save-btn button{
+    background-color: var(--background-primary);
+    color: var(--icon-inactive);
+}
+.save-btn i {
+    color: var(--icon-inactive);
+}
+.modal-footer {
+    border-top: 0.1rem solid var(--text-secondary);
+    display: flex;
+    flex-direction: column; 
+    padding: 0.4rem;
+}
+.modal-footer button {
+    padding: 0.4rem;
+    align-self: center;
+    background-color: transparent;
+}
+.modal-footer i {
+    color: var(--icon-inactive);
+}
+.modal-footer label{
+    font-size: 0.9rem;
+    align-self: flex-start;
+}
+.modal-footer .input-box{
+   padding: 0.4rem;
+   background-color: transparent;
+   color: var(--text-primary);
+   border-right: none;
+   outline: none;
+   border-bottom: 0.16rem solid var(--text-primary);
+}
+.modal-footer .input-box::placeholder {
+    color: var(--text-primary);
+}
+.modal-footer .input-box-required {
+    -webkit-transition: 0.5s;
+    transition: all 0.3s linear; 
+    border-bottom: 0.16rem solid var(--red);
+}
+.modal-footer .create-playlist {
+    color: var(--blue);
+    align-self: flex-end;
+}

@@ -1,0 +1,41 @@
+.btn {
+    cursor: pointer;
+}
+.thumbs-up, .clock {
+    color: var(--icon-inactive);
+}
+.liked-icon, .watch-later {
+    color: var(--blue);
+}
+.video-player-container {
+    /* border: 2px solid red; */
+    position: absolute;
+    left: 16rem;
+    top: 8rem;
+    color: var(--text-primary);
+}
+.video-player-container .card-content {
+    position: relative;
+    top: 1.5rem;
+    left: 1rem;
+}
+.video-player-container .channel-details-footer {
+  left: 0;
+}
+.video-tile {
+    font-size: 1.2rem;
+}
+.video-play .save-video {
+    position: absolute;
+    top: 0.3rem;
+    right: 1.4rem;
+    display: flex;
+    color: var(--text-primary);
+    font-size: 0.6rem;
+}
+.save-video i {
+    font-size: 1.5rem;
+}
+.video-play .save-video button {
+    color: var(--text-primary);
+}

@@ -1,11 +1,24 @@
 import ReactPlayer from "react-player";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import videosList from "../../Database";
 import { usePlaylist, ACTIONS } from "../../context/playlist-context";
-import { useState } from "react";
+import Modal from "../Modal/Modal";
+import "./VideoDetailPage.css";
 
 export default function VideoDetailPage(){
   const { videoId } = useParams();
+  const { dispatch, likedVideosId, watchLaterVideosId } = usePlaylist();
+
+  const isVideoLiked = (videoId) => {
+    return likedVideosId.find(video => video === videoId);
+  }
+  const [likeToggle, setLikeToggle] = useState(isVideoLiked(videoId));
+
+  const isInWatchLater = (videoId) => {
+    return watchLaterVideosId.find(video => video === videoId);
+  }
+  const [watchLaterToggle, setwatchLaterToggle] = useState(isInWatchLater(videoId));
 
   const getVideoDetails = (videoId) => {
     return videosList.find(video => video.id === videoId);
@@ -15,42 +28,60 @@ export default function VideoDetailPage(){
   const id = video.id;
   const title = video.title;
   const channelName = video.channelName;
-  //const thumbnail = video.thumbnail;
   const channelImgUrl = video.channelImgUrl;
   const videoUrl = video.videoUrl;
-
-
-  const [playlistName, setPlaylistName] = useState("")
-
-  const { dispatch } = usePlaylist();
-
-  function handleChange(event){
-          setPlaylistName(event.target.value);
-  }
-
-  function handleCreate(playlistName,videoId){
-    dispatch({
-          type: ACTIONS.CREATE_PLAYLIST,
-          payload: {playlistName, videoId}
-      })
-  }
+  const viewCount = video.viewCount;
 
   function handleLike(videoId){
+    if(likeToggle){
+      setLikeToggle(!likeToggle);
       dispatch({
-        type: ACTIONS.ADD_TO_PLAYLIST,
-        payload: {playlistName: "Liked Videos", videoId}
+        type: ACTIONS.REMOVE_FROM_LIKED,
+        payload: {videoId}
       })
+    }else {
+      setLikeToggle(!likeToggle);
+      dispatch({
+        type: ACTIONS.ADD_TO_LIKED,
+        payload: {videoId}
+      })
+    }
   }
+  function handleWatchLater(videoId){
+    if(watchLaterToggle){
+      setwatchLaterToggle(!watchLaterToggle);
+      dispatch({
+        type: ACTIONS.REMOVE_FROM_WATCH_LATER,
+        payload: {videoId}
+      })
+    }else {
+      setwatchLaterToggle(!watchLaterToggle);
+      dispatch({
+        type: ACTIONS.ADD_TO_WATCH_LATER,
+        payload: {videoId}
+      })
+    }
+  }
+ 
 
+  
   return (
-    <div>
-    <ReactPlayer url={videoUrl} playing={true} width={"1000px"} height={"600px"}/>
-    <h3>{title}</h3>
-   <img src={channelImgUrl} alt="channelImage"/> <h4>{channelName}</h4>
-    <button onClick={() => handleLike(id)} className={"btn btn-icon"}> <i class="far fa-thumbs-up"></i></button>
-    <div>
-    <input type="text" name="playlistName" onChange={handleChange} className="input-box"/>
-    <button onClick={() => handleCreate(playlistName,id)} className={"btn btn-primary"}>Save</button>
+    <div key={id} className="video-player-container">
+    <ReactPlayer url={videoUrl} playing={false} width={"1500px"} height={"550px"}/>
+    <div className="card-content video-play">
+            {/* <img src={channelImgUrl} alt="channel"/> */}
+            <div className="channel-details">
+                <div className="video-tile">{title}</div>
+                <div className="channel-details-footer">
+                    <p>{channelName}</p>
+                    <p>{viewCount} views • 3 months ago</p>
+                </div>
+            </div>
+            <div className="save-video">
+            <button onClick={() => handleLike(id)} className="btn btn-icon"> <i className={likeToggle ?  "fas fa-thumbs-up liked-icon thumbs-up" : "fas fa-thumbs-up thumbs-up"}></i></button>
+            <button onClick={() => handleWatchLater(id)} className="btn btn-icon"> <i className={watchLaterToggle ?  "fas fa-clock fa-lg watch-later clock" : "fas fa-clock fa-lg clock"}></i></button>  
+            <Modal value={id}/>
+            </div>
     </div>
   </div>
   )
