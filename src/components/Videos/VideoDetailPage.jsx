@@ -28,7 +28,7 @@ export default function VideoDetailPage(){
   const id = video.id;
   const title = video.title;
   const channelName = video.channelName;
-  const channelImgUrl = video.channelImgUrl;
+  // const channelImgUrl = video.channelImgUrl;
   const videoUrl = video.videoUrl;
   const viewCount = video.viewCount;
 

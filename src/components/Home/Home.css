@@ -3,17 +3,16 @@
     left: 14rem;
     top: 8rem;
     width: 100%;
-    height: 100%;
-    /* border: 2px solid red; */
-    background-color: var(--text-primary-inverse);
+    max-height: 100%;
+    background-color: var(--main-body-background);
 }
 .videos-list {
     display: flex;
     flex-wrap: wrap;
     position: absolute;
     left: 1rem;
-    top: 0rem;
-    background-color: var(--text-primary-inverse);
+    top: 0;
+    background-color: var(--main-body-background);
 }
 
 @media only screen and (max-width: 600px) {

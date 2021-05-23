@@ -7,7 +7,7 @@ export default function VideosListing(props){
     const id = props.value.id;
     const title = props.value.title;
     const channelName = props.value.channelName;
-    const channelImgUrl = props.value.channelImgUrl;
+    // const channelImgUrl = props.value.channelImgUrl;
     const thumbnail = props.value.thumbnail;
     //const videoUrl = props.value.videoUrl;
     const viewCount = props.value.viewCount;
@@ -32,7 +32,9 @@ export default function VideosListing(props){
     
        <Link to={`/video/${id}`} className="video-card"> 
        <div key={id} className="card card-md" onClick={() => handleHistory(id)}>
+        <div className="thumbnail-container">
        <img src={thumbnail} alt="thumbnail" className="thumbnail" />
+       </div>
         <div className="card-content">
             {/* <div className="channel-img">
             <img src={channelImgUrl} alt="channel"/>
