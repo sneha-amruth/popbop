@@ -29,23 +29,23 @@ export default function Navbar(){
         </div>
      </div>
      <div className="side-nav">
-            <NavLink exact to="/" className="nav-icons" activeClassName="nav-icons-active">
+            <NavLink end to="/" className="nav-icons" activeClassName="nav-icons-active">
                 <i class="fas fa-home fa-lg"></i> 
                 <div className="nav-name">Home </div>
             </NavLink>
-            <NavLink exact to="/history" className="nav-icons" activeClassName="nav-icons-active">
+            <NavLink end to="/history" className="nav-icons" activeClassName="nav-icons-active">
                 <i class="fas fa-history fa-lg"> </i>
                 <div className="nav-name">History </div>
             </NavLink>
-            <NavLink exact to="/liked" className="nav-icons" activeClassName="nav-icons-active">
+            <NavLink end to="/liked" className="nav-icons" activeClassName="nav-icons-active">
                 <i class="fas fa-thumbs-up fa-lg"></i> 
                 <div className="nav-name">Liked videos </div>
             </NavLink>
-            <NavLink exact to="/watch-later" className="nav-icons" activeClassName="nav-icons-active">
+            <NavLink end to="/watch-later" className="nav-icons" activeClassName="nav-icons-active">
                 <i class="fas fa-clock fa-lg"></i> 
                 <div className="nav-name">Watch later</div>
             </NavLink>
-            <NavLink exact to="/playlist" className="nav-icons" activeClassName="nav-icons-active">
+            <NavLink end to="/playlist" className="nav-icons" activeClassName="nav-icons-active">
                 <i class="fas fa-stream fa-lg"></i> 
                 <div className="nav-name">Playlist </div>
             </NavLink>
