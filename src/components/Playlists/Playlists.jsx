@@ -25,17 +25,15 @@ export default function Playlists(){
 
     return (
         <div className="all-videos-conatiner">
-        <h1>
-            Playlists
-        </h1>
+         {playlists.length === 0 && <div className="no-playlists">No playlist created yet!</div>} 
        { 
         playlists.map(playlist => (
-           <div style={{ display: "flex", flexWrap: "wrap" }}>
-           <h2 key={playlist.id}>{playlist.name}</h2> <span><button className="btn btn-icon badge" onClick={() => handlePlaylistDelete(playlist.id)}><i className="fas fa-trash fa-xs"></i></button></span>
-           {playlist.videos.length === 0 ? <div><h4>No videos in this playlist yet</h4> </div> :
+           <div className="playlist-container">
+           <div className="playlist-header"><h2 key={playlist.id}>{playlist.name}</h2> <span><button className="btn btn-icon badge" onClick={() => handlePlaylistDelete(playlist.id)}><i className="fas fa-trash fa-xs"></i></button></span></div>
+           {playlist.videos.length === 0 ? <div className="no-videos"><h4>No videos in this playlist yet</h4> </div> :
                   playlist.videos?.map(videoId => (
-                       <> <VideosListing key={videoId} value={getVideoObject(videoId)[0]}/>
-                        <button className="btn btn-icon badge" onClick={() => handleRemoveVideo(playlist.id, videoId)}><i className="fas fa-trash fa-sm"></i></button></>
+                       <><VideosListing key={videoId} value={getVideoObject(videoId)[0]}/>
+                        <button className="btn btn-icon badge" onClick={() => handleRemoveVideo(playlist.id, videoId)}><i className="fas fa-trash fa-sm trash-icon"></i></button></>
                     )) 
                 }
             </div>

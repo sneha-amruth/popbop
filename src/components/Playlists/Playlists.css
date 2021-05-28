@@ -1,3 +1,30 @@
+.playlist-header {
+   margin: 1rem;
+}
+.playlist-header .badge  {
+    margin: 1rem;
+    position: relative;
+    top: -4.8rem;
+    right: -3.5rem;
+}
 .fa-trash {
     color: #545050;
+}
+.playlist-container {
+    display: flex;
+    flex-wrap: wrap; 
+}
+.trash-icon {
+    position: relative;
+    top: -9rem;
+    right: 3.6rem;
+}
+.playlist-container .no-videos {
+    font-size: 1.2rem;
+}
+.no-playlists {
+    position: relative;
+    left: -31rem;
+    top: 2rem;
+    font-size: 1.8rem;
 }

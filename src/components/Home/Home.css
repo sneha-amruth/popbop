@@ -3,7 +3,9 @@
     left: 14rem;
     top: 8rem;
     width: 100%;
-    max-height: 100%;
+    /* max-height: 100%; */
+    min-height: 100%;
+    /* border: 2px solid red; */
     background-color: var(--main-body-background);
 }
 .videos-list {
