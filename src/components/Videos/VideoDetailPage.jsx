@@ -67,7 +67,7 @@ export default function VideoDetailPage(){
   
   return (
     <div key={id} className="video-player-container">
-    <ReactPlayer url={videoUrl} playing={false} width={"1500px"} height={"550px"}/>
+    <ReactPlayer url={videoUrl} playing={true} width={"1500px"} height={"550px"}/>
     <div className="card-content video-play">
             {/* <img src={channelImgUrl} alt="channel"/> */}
             <div className="channel-details">
