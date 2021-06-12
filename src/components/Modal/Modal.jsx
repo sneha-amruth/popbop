@@ -1,38 +1,36 @@
 import { useState } from "react";
 import { usePlaylist, ACTIONS } from "../../context/playlist-context";
+import { useAuth } from "../../context/auth-context";
+import { restAPICalls } from "../../utils/CallRestAPI";
 import "./Modal.css";
 
 export default function Modal(props){
-    const id = props.value;
-    const { playlists, dispatch } = usePlaylist();
+    const videoObject = props.value;
+    const videoId = props.value._id;
+    const { playlists, handleAddVideo, handleRemoveVideo, dispatch } = usePlaylist();
+    const { isUserLoggedIn } = useAuth();
     const [showModal, setShowModal] = useState(false);
     const [playlistName, setPlaylistName] = useState("");
     const [showInput, setShowInput] = useState(false);
     const [showRequiredError, setShowRequiredError] = useState(false);
+    const {request} = restAPICalls();
 
     function handleModal(toggle){
         toggle ? setShowModal(true) : setShowModal(false);
         setShowInput(false);
         setShowRequiredError(false);
     }
-    function isVideoInPlaylist(playlistName, videoId){
-       const currPlaylist = playlists.filter(playlist => playlist.name === playlistName)[0];
-       return currPlaylist.videos?.find(video => video === videoId);
+    function isVideoInPlaylist(playlistName, playlistId, videoId){
+       const currPlaylist = playlists.filter(playlist => playlist._id === playlistId)[0];
+       return currPlaylist.playlistVideos?.find(videoObject => videoObject.video?._id === videoId);
     }
 
-    function handleCheckboxChange(event, playlistId, videoId){
+    const handleCheckboxChange = async(event, playlistId, videoId, videoObject) => {
         const checked = event.target.checked;
-        if(checked){
-            dispatch({
-                type: ACTIONS.ADD_TO_PLAYLIST,
-                payload: {playlistId, videoId}
-            })
-        }else {
-            dispatch({
-                type: ACTIONS.REMOVE_FROM_PLAYLIST,
-                payload: {playlistId, videoId}
-            })
-        }
+        if(checked)
+            handleAddVideo(playlistId, videoId, videoObject);
+        else 
+            handleRemoveVideo(playlistId, videoId);
     }
     
 function handleChange(event){
@@ -43,16 +41,32 @@ function handleClick(){
     setShowInput(!showInput);
 }
 
-function handleCreate(playlistName,videoId){
-    if(playlistName === ""){
-        setShowRequiredError(true);
-        return;
-    }
-  setPlaylistName("");
-  dispatch({
-        type: ACTIONS.CREATE_PLAYLIST,
-        payload: {playlistName, videoId}
-    });
+const  handleCreate = async (playlistName,videoId) => {
+    if(isUserLoggedIn){
+        if(playlistName === ""){
+            setShowRequiredError(true);
+            return;
+        }
+       setPlaylistName("");
+        try {
+           const {data, success} = await request({
+             method: "POST",
+             endpoint: `/api/playlist/${videoId}`,
+             body: {
+                 "name": playlistName
+             }
+         });
+         
+         if(success){
+           dispatch({
+            type: ACTIONS.CREATE_PLAYLIST,
+            payload: {newPlaylist: data}
+           })
+         } 
+        } catch(err) {
+          console.error(err);
+        }
+      }
 }
 
 return (
@@ -67,7 +81,7 @@ return (
             { playlists.map(playlist => (
                 <div className="modal-list"> 
                 <div className="checkbox-container">
-                    <input name={playlist.name} value={playlist.name} type="checkbox"  checked={isVideoInPlaylist(playlist.name,id)} onChange={(event) => handleCheckboxChange(event, playlist.id, id)} />
+                    <input name={playlist.name} value={playlist.name} type="checkbox"  checked={isVideoInPlaylist(playlist.name,playlist._id,videoId)} onChange={(event) => handleCheckboxChange(event, playlist._id, videoId, videoObject)} />
                 </div>
                 <label> {playlist.name} </label>
             </div>
@@ -80,7 +94,7 @@ return (
                  {showRequiredError ? <p className="requiredError">Required</p> : ""}
                  </> : ""}
             {showInput ?     
-             <button onClick={() => handleCreate(playlistName,id)} className="btn btn-primary create-playlist" type="submit">CREATE</button> :
+             <button onClick={() => handleCreate(playlistName,videoId)} className="btn btn-primary create-playlist" type="submit">CREATE</button> :
              <button onClick={handleClick} className="btn btn-primary"><i class="fas fa-plus fa-xs"></i> Create new playlist</button> 
             }
            </div>

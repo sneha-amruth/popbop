@@ -4,13 +4,12 @@ import { usePlaylist, ACTIONS } from "../../context/playlist-context";
 //import HoverVideoPlayer from 'react-hover-video-player';
 
 export default function VideosListing(props){
-    const id = props.value.id;
-    const title = props.value.title;
-    const channelName = props.value.channelName;
-    // const channelImgUrl = props.value.channelImgUrl;
-    const thumbnail = props.value.thumbnail;
+    const id = props.value?._id;
+    const title = props.value?.title;
+    const channelName = props.value?.channelName;
+    const thumbnail = props.value?.thumbnail;
     //const videoUrl = props.value.videoUrl;
-    const viewCount = props.value.viewCount;
+    const viewCount = props.value?.viewCount;
 
     const { dispatch, watchedHistoryVideosId } = usePlaylist();
 

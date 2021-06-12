@@ -1,0 +1,28 @@
+.btn-create {
+    background-color: transparent;
+    color: var(--white);
+}
+.signup-form {
+    margin: 5rem auto;
+    margin-top: 8rem;
+   
+}
+.signup-form h1 {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.signup-form .input-box {
+   position: relative;
+   left: 46rem;
+   margin: 1rem;
+   width: 20rem;
+}
+.signup-form .btn {
+   background-color: var(--black);
+   color: var(--white);
+}
+.signup-form .error-message {
+    position: relative;
+   left: 45rem;
+    width: 22rem;
+}

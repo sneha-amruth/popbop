@@ -1,0 +1,36 @@
+.login-form {
+    margin: 5rem auto;
+}
+.login-form h1 {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.login-form label {
+   text-align: left;
+   font-size: 1.2rem;
+   font-weight: 400;
+   padding: 0.5rem;
+}
+.input-box {
+    border: 1px solid grey;
+    width: 24rem;
+    border-radius: 3px;
+    padding: 10px 15px;
+    display: block;
+    font-size: 18px;
+    font-weight: 300;
+}
+.btn {
+    cursor: pointer;
+}
+
+.error-message {
+    color: #d02e2e;
+    background-color: #fff6f6;
+    border-color: #d02e2e;
+    padding: 0.6rem;
+    margin: 1rem;
+}
+.error-message:empty {
+    display: none;
+}

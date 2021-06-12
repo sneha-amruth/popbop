@@ -5,8 +5,14 @@ import Playlists from "../Playlists/Playlists";
 import LikedVideos from "../LikedVideos/LikedVideos";
 import WatchLater from "../WatchLater/WatchLater";
 import VideoDetailPage from '../Videos/VideoDetailPage';
+import Login from "../Account/Login";
+import PrivateRoute from "../Account/PrivateRoute";
+import NotFound from "../Account/404";
+import Account from "../Account/Account";
 import "./Navbar.css";
 import logo from "../../assets/mybrand.png";
+import SignUp from "../Account/SignUp";
+
 
 export default function Navbar(){
     return(
@@ -26,6 +32,7 @@ export default function Navbar(){
             <Link to="/liked" className="nav-icons"><i class="fas fa-thumbs-up fa-lg"></i></Link>
             <Link to="/watch-later" className="nav-icons"><i class="fas fa-clock fa-lg"></i></Link>
             <Link to="/playlist" className="nav-icons"><i class="fas fa-stream fa-lg"></i></Link>
+            <Link to="/account" className="nav-icons"><i class="fas fa-user fa-lg "></i></Link>
         </div>
      </div>
      <div className="side-nav">
@@ -54,10 +61,14 @@ export default function Navbar(){
       <Routes>
         <Route path="/" element={<Home/>}> </Route>
         <Route path="/video/:videoId" element={<VideoDetailPage/>}></Route>
-        <Route path="/history">{<History/>} </Route>
-        <Route path="/liked">{<LikedVideos/>} </Route>
-        <Route path="/watch-later">{<WatchLater/>} </Route>
-        <Route path="/playlist">{<Playlists/>} </Route>
+        <PrivateRoute path="/history">{<History/>} </PrivateRoute>
+        <PrivateRoute path="/liked">{<LikedVideos/>} </PrivateRoute>
+        <PrivateRoute path="/watch-later">{<WatchLater/>} </PrivateRoute>
+        <PrivateRoute path="/playlist">{<Playlists/>} </PrivateRoute>
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<SignUp/>} />
+        <PrivateRoute path="/account" element={<Account/>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
     )

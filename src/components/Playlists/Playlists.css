@@ -2,10 +2,10 @@
    margin: 1rem;
 }
 .playlist-header .badge  {
-    margin: 1rem;
-    position: relative;
-    top: -4.8rem;
-    left: -5.4rem;
+    margin-right: 1rem;
+    /* position: fixed;
+    top: -3.7rem;
+    left: -4.8rem; */
 }
 .fa-trash {
     color: #545050;

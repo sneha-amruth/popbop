@@ -1,17 +1,23 @@
 import ReactPlayer from "react-player";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import videosList from "../../Database";
 import { usePlaylist, ACTIONS } from "../../context/playlist-context";
 import Modal from "../Modal/Modal";
+import Loader  from "../Loader/Loader";
+import { useLoader } from "../../context/loader-context";
+import { restAPICalls } from "../../utils/CallRestAPI";
 import "./VideoDetailPage.css";
 
 export default function VideoDetailPage(){
-  const { videoId } = useParams();
-  const { dispatch, likedVideosId, watchLaterVideosId } = usePlaylist();
+  const {isLoading, setLoading} = useLoader();
+  const {request} = restAPICalls();
 
+  const { videoId } = useParams();
+  const [videoDetails, setVideoDetails] = useState();
+  const { dispatch, likedVideos, handleLikeToggle, watchLaterVideosId } = usePlaylist();
+ 
   const isVideoLiked = (videoId) => {
-    return likedVideosId.find(video => video === videoId);
+    return  likedVideos?.find(video => video._id === videoId);
   }
   const [likeToggle, setLikeToggle] = useState(isVideoLiked(videoId));
 
@@ -20,31 +26,36 @@ export default function VideoDetailPage(){
   }
   const [watchLaterToggle, setwatchLaterToggle] = useState(isInWatchLater(videoId));
 
-  const getVideoDetails = (videoId) => {
-    return videosList.find(video => video.id === videoId);
-  }
-
-  const video = getVideoDetails(videoId);
-  const id = video.id;
-  const title = video.title;
-  const channelName = video.channelName;
-  // const channelImgUrl = video.channelImgUrl;
-  const videoUrl = video.videoUrl;
-  const viewCount = video.viewCount;
+  useEffect(() => {
+    (async () => { 
+      setLoading(true);
+      try {
+        const { data, success } = await request({
+          method: "GET",
+          endpoint: `/api/video/${videoId}`,
+        });
+        if (success) {
+          setVideoDetails(data);
+            setLoading(false);
+        } else {
+          console.error("something went worng.");
+        }
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+     
+    })();
+   
+  }, []);
 
   function handleLike(videoId){
     if(likeToggle){
       setLikeToggle(!likeToggle);
-      dispatch({
-        type: ACTIONS.REMOVE_FROM_LIKED,
-        payload: {videoId}
-      })
+      handleLikeToggle({videoId, like: false, type: ACTIONS.REMOVE_FROM_LIKED})
     }else {
       setLikeToggle(!likeToggle);
-      dispatch({
-        type: ACTIONS.ADD_TO_LIKED,
-        payload: {videoId}
-      })
+      handleLikeToggle({videoId, like: true, type: ACTIONS.ADD_TO_LIKED})
     }
   }
   function handleWatchLater(videoId){
@@ -62,28 +73,30 @@ export default function VideoDetailPage(){
       })
     }
   }
- 
-
   
   return (
-    <div key={id} className="video-player-container">
-    <ReactPlayer url={videoUrl} playing={true} width={"1500px"} height={"550px"}/>
+    <>
+    {isLoading && <Loader />}
+    {!isLoading && videoDetails && 
+    <div key={videoDetails._id} className="video-player-container">
+    <ReactPlayer url={videoDetails.videoUrl} playing={true} width={"1500px"} height={"550px"}/>
     <div className="card-content video-play">
             {/* <img src={channelImgUrl} alt="channel"/> */}
             <div className="channel-details">
-                <div className="video-tile">{title}</div>
+                <div className="video-tile">{videoDetails.title}</div>
                 <div className="channel-details-footer">
-                    <p>{channelName}</p>
-                    <p>{viewCount} views • 3 months ago</p>
+                    <p>{videoDetails.channelName}</p>
+                    <p>{videoDetails.viewCount} views • 3 months ago</p>
                 </div>
             </div>
             <div className="save-video">
-            <button onClick={() => handleLike(id)} className="btn btn-icon"> <i className={likeToggle ?  "fas fa-thumbs-up liked-icon thumbs-up" : "fas fa-thumbs-up thumbs-up"}></i></button>
-            <button onClick={() => handleWatchLater(id)} className="btn btn-icon"> <i className={watchLaterToggle ?  "fas fa-clock fa-lg watch-later clock" : "fas fa-clock fa-lg clock"}></i></button>  
-            <Modal value={id}/>
+            <button onClick={() => handleLike(videoDetails._id)} className="btn btn-icon"> <i className={likeToggle ?  "fas fa-thumbs-up liked-icon thumbs-up" : "fas fa-thumbs-up thumbs-up"}></i></button>
+            <button onClick={() => handleWatchLater(videoDetails._id)} className="btn btn-icon"> <i className={watchLaterToggle ?  "fas fa-clock fa-lg watch-later clock" : "fas fa-clock fa-lg clock"}></i></button>  
+            <Modal value={videoDetails}/>
             </div>
     </div>
-  </div>
+  </div>}
+  </>
   )
 
 }
