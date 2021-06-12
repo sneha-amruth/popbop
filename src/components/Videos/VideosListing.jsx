@@ -11,20 +11,22 @@ export default function VideosListing(props){
     //const videoUrl = props.value.videoUrl;
     const viewCount = props.value?.viewCount;
 
-    const { dispatch, watchedHistoryVideosId } = usePlaylist();
+    const { handleToggle, watchHistoryVideos } = usePlaylist();
 
     const isInWatchHistory = (videoId) => {
-         return watchedHistoryVideosId.find(video => video === videoId); 
+         return watchHistoryVideos?.find(video => video._id === videoId); 
       }
+    
     function handleHistory(videoId) {
         const watched = isInWatchHistory(videoId);
         if(watched) {
             return;
         }
-        dispatch({
-            type: ACTIONS.ADD_TO_HISTORY,
-            payload: {videoId}
-        })
+        handleToggle({videoId, toggle: true, type: ACTIONS.ADD_TO_HISTORY, playlist: "history"})
+        // dispatch({
+        //     type: ACTIONS.ADD_TO_HISTORY,
+        //     payload: {videoId}
+        // })
     }
 
     return (

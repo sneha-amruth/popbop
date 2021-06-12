@@ -14,7 +14,7 @@ export default function Account(){
         <>
         <h1 className="account-header">Hello, {userName}</h1>
         <h2>Welcome to popbop</h2>
-        <button onClick={() => {logoutUser(); }}  className="btn btn-small">{isUserLoggedIn ? "logout" : "login"}</button>
+        <button onClick={() => {logoutUser()}}  className="btn btn-small">{isUserLoggedIn ? "logout" : "login"}</button>
         </>
     )
 }

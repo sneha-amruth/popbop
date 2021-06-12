@@ -16,6 +16,8 @@ export const ACTIONS = {
     REMOVE_FROM_PLAYLIST: "remove-from-playlist",
     ADD_TO_HISTORY: "add-to-history",
     SET_LIKED_VIDEOS: "set-liked-videos",
+    SET_WATCH_LATER_VIDEOS: "set-watch-later-videos",
+    SET_WATCH_HISTORY_VIDEOS: "set-watch-history",
     SET_PLAYLISTS: "set-playlists"
 }
 
@@ -25,7 +27,7 @@ export function PlaylistProvider({children}){
   const { isUserLoggedIn } = useAuth();
 
     const reducer = (state, action) => {
-        const {playlists, likedVideos, watchLaterVideosId, watchedHistoryVideosId} = state;
+        const {playlists, likedVideos, watchLaterVideos, watchHistoryVideos} = state;
         switch(action.type){
 
           case ACTIONS.SET_LIKED_VIDEOS: 
@@ -33,6 +35,16 @@ export function PlaylistProvider({children}){
               ...state,
               likedVideos: action.payload.likedVideos
             }
+          case ACTIONS.SET_WATCH_LATER_VIDEOS:
+            return {
+              ...state,
+              watchLaterVideos: action.payload.watchLaterVideos
+            }
+          case ACTIONS.SET_WATCH_HISTORY_VIDEOS:
+          return {
+            ...state,
+            watchHistoryVideos: action.payload.watchHistoryVideos
+          }
 
           case ACTIONS.SET_PLAYLISTS:
             return {
@@ -79,26 +91,25 @@ export function PlaylistProvider({children}){
             case ACTIONS.REMOVE_FROM_LIKED:
                 return {...state, likedVideos: likedVideos.filter(video => video._id !== action.payload._id )}
             
-                case ACTIONS.ADD_TO_WATCH_LATER:
-                    return {...state, watchLaterVideosId: [...watchLaterVideosId, action.payload.videoId]}
-    
-                case ACTIONS.REMOVE_FROM_WATCH_LATER:
-                    return {...state, watchLaterVideosId: watchLaterVideosId.filter(videoId => videoId !== action.payload.videoId )}
-                
-                case ACTIONS.ADD_TO_HISTORY:
-                return {...state, watchedHistoryVideosId: [...watchedHistoryVideosId, action.payload.videoId]}
+            case ACTIONS.ADD_TO_WATCH_LATER:
+                return {...state, watchLaterVideos: [...watchLaterVideos, action.payload]}
+
+            case ACTIONS.REMOVE_FROM_WATCH_LATER:
+                return {...state, watchLaterVideos: watchLaterVideos.filter(video => video._id !== action.payload._id )}
+            
+            case ACTIONS.ADD_TO_HISTORY:
+            return {...state, watchHistoryVideos: [...watchHistoryVideos, action.payload]}
 
             default:
                 return state;
         }
     }
-    const handleLikeToggle = async ({videoId, like, type}) => {
+    const handleToggle = async ({videoId, toggle, type, playlist}) => {
       if(isUserLoggedIn){
-       console.log("like ? "+like);
         try {
            const {data, success} = await request({
-             method: like ? "POST" : "DELETE",
-             endpoint: `/api/liked/${videoId}`,
+             method: toggle ? "POST" : "DELETE",
+             endpoint: `/api/${playlist}/${videoId}`,
          });
          if(success){
            dispatch({
@@ -111,6 +122,7 @@ export function PlaylistProvider({children}){
         }
       }
     }
+    
     const handleRemoveVideo = async(playlistId, videoId) => {
       try {
           const { success } = await request({
@@ -133,7 +145,6 @@ export function PlaylistProvider({children}){
           method: "POST",
           endpoint: `/api/playlist/${playlistId}/${videoId}`,
       });
-      console.log("handle add video - "+ videoObject);
       if(success){
         dispatch({
           type: ACTIONS.ADD_TO_PLAYLIST,
@@ -150,7 +161,16 @@ export function PlaylistProvider({children}){
         type: ACTIONS.SET_LIKED_VIDEOS, payload: { likedVideos }
       });
     }
-
+    const setWatchLaterVideos = ({watchLaterVideos}) => {
+      dispatch({ 
+        type: ACTIONS.SET_WATCH_LATER_VIDEOS, payload: { watchLaterVideos }
+      });
+    }
+    const setWatchHistoryVideos = ({watchHistoryVideos}) => {
+      dispatch({ 
+        type: ACTIONS.SET_WATCH_HISTORY_VIDEOS, payload: { watchHistoryVideos }
+      });
+    }
     const setPlaylists = ({playlists}) => {
       dispatch({
         type: ACTIONS.SET_PLAYLISTS, payload: {playlists}
@@ -163,11 +183,14 @@ export function PlaylistProvider({children}){
         try {
           const { data, success } = await request({
             method: "GET",
-            endpoint: `/api/liked`
+            endpoint: `/api/default`
           });
           if(success) {
+            console.log("in fetching liked "+data.likedVideos);
             setLoading(false);
-            setLikedVideos({likedVideos: data?.likedVideos})
+            setLikedVideos({likedVideos: data.likedVideos});
+            setWatchLaterVideos({watchLaterVideos: data.watchLater});
+            setWatchHistoryVideos({watchHistoryVideos: data.historyVideos})
           }
         } catch(err){
           console.log("errr");
@@ -198,13 +221,14 @@ export function PlaylistProvider({children}){
         fetchData();
       } else {
         setLikedVideos({likedVideos: []});
+        setWatchLaterVideos({watchLaterVideos: []});
       }
     }, [isUserLoggedIn])
     
-   const [{playlists, likedVideos, watchLaterVideosId, watchedHistoryVideosId }, dispatch] = useReducer(reducer, {playlists: [], likedVideosId: [], watchLaterVideosId: [], watchedHistoryVideosId: []});
+   const [{playlists, likedVideos, watchLaterVideos, watchHistoryVideos }, dispatch] = useReducer(reducer, {playlists: [], likedVideos: [], watchLaterVideos: [], watchHistoryVideos: []});
   
     return (
-        <PlaylistContext.Provider value={{ playlists, likedVideos, handleLikeToggle, watchLaterVideosId, watchedHistoryVideosId, handleAddVideo, handleRemoveVideo, dispatch, reducer }}>
+        <PlaylistContext.Provider value={{ playlists, likedVideos, handleToggle, watchLaterVideos, watchHistoryVideos, handleAddVideo, handleRemoveVideo, dispatch, reducer }}>
             {children}
         </PlaylistContext.Provider>
     );

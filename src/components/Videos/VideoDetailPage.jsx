@@ -1,20 +1,23 @@
 import ReactPlayer from "react-player";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { usePlaylist, ACTIONS } from "../../context/playlist-context";
 import Modal from "../Modal/Modal";
 import Loader  from "../Loader/Loader";
 import { useLoader } from "../../context/loader-context";
 import { restAPICalls } from "../../utils/CallRestAPI";
+import { useAuth } from "../../context/auth-context";
 import "./VideoDetailPage.css";
 
 export default function VideoDetailPage(){
   const {isLoading, setLoading} = useLoader();
   const {request} = restAPICalls();
+  const navigate = useNavigate();
+  const { isUserLoggedIn } = useAuth();
 
   const { videoId } = useParams();
   const [videoDetails, setVideoDetails] = useState();
-  const { dispatch, likedVideos, handleLikeToggle, watchLaterVideosId } = usePlaylist();
+  const { likedVideos, handleToggle, watchLaterVideos } = usePlaylist();
  
   const isVideoLiked = (videoId) => {
     return  likedVideos?.find(video => video._id === videoId);
@@ -22,7 +25,7 @@ export default function VideoDetailPage(){
   const [likeToggle, setLikeToggle] = useState(isVideoLiked(videoId));
 
   const isInWatchLater = (videoId) => {
-    return watchLaterVideosId.find(video => video === videoId);
+    return watchLaterVideos?.find(video => video._id === videoId);
   }
   const [watchLaterToggle, setwatchLaterToggle] = useState(isInWatchLater(videoId));
 
@@ -50,27 +53,27 @@ export default function VideoDetailPage(){
   }, []);
 
   function handleLike(videoId){
+    if(!isUserLoggedIn){
+      navigate("/login");
+    }
     if(likeToggle){
       setLikeToggle(!likeToggle);
-      handleLikeToggle({videoId, like: false, type: ACTIONS.REMOVE_FROM_LIKED})
+      handleToggle({videoId, toggle: false, type: ACTIONS.REMOVE_FROM_LIKED, playlist: "liked"})
     }else {
       setLikeToggle(!likeToggle);
-      handleLikeToggle({videoId, like: true, type: ACTIONS.ADD_TO_LIKED})
+      handleToggle({videoId, toggle: true, type: ACTIONS.ADD_TO_LIKED, playlist: "liked"})
     }
   }
   function handleWatchLater(videoId){
+    if(!isUserLoggedIn){
+      navigate("/login");
+    }
     if(watchLaterToggle){
       setwatchLaterToggle(!watchLaterToggle);
-      dispatch({
-        type: ACTIONS.REMOVE_FROM_WATCH_LATER,
-        payload: {videoId}
-      })
+      handleToggle({videoId, toggle: false, type: ACTIONS.REMOVE_FROM_WATCH_LATER, playlist: "watch-later"})
     }else {
       setwatchLaterToggle(!watchLaterToggle);
-      dispatch({
-        type: ACTIONS.ADD_TO_WATCH_LATER,
-        payload: {videoId}
-      })
+      handleToggle({videoId, toggle: true, type: ACTIONS.ADD_TO_WATCH_LATER, playlist: "watch-later"})
     }
   }
   
