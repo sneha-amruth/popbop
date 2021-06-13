@@ -6,19 +6,19 @@ import { useLoader } from "../context/loader-context";
 export const PlaylistContext = createContext();
 
 export const ACTIONS = {
+    SET_PLAYLISTS: "set-playlists",
     CREATE_PLAYLIST: "create-playlist",
     DELETE_PLAYLIST: "delete-playlist",
-    ADD_TO_LIKED: "add-to-liked",
-    REMOVE_FROM_LIKED: "remove-from-liked",
-    ADD_TO_WATCH_LATER: "add-to-watch-later",
-    REMOVE_FROM_WATCH_LATER: "remove-from-watch-later",
     ADD_TO_PLAYLIST: "add-to-playlist",
     REMOVE_FROM_PLAYLIST: "remove-from-playlist",
-    ADD_TO_HISTORY: "add-to-history",
     SET_LIKED_VIDEOS: "set-liked-videos",
+    ADD_TO_LIKED: "add-to-liked",
+    REMOVE_FROM_LIKED: "remove-from-liked",
     SET_WATCH_LATER_VIDEOS: "set-watch-later-videos",
+    ADD_TO_WATCH_LATER: "add-to-watch-later",
+    REMOVE_FROM_WATCH_LATER: "remove-from-watch-later",
     SET_WATCH_HISTORY_VIDEOS: "set-watch-history",
-    SET_PLAYLISTS: "set-playlists"
+    ADD_TO_HISTORY: "add-to-history",  
 }
 
 export function PlaylistProvider({children}){

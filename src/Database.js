@@ -130,34 +130,3 @@ export const myPlaylists= [
     }
 ]
 
-// export const myPlaylists= [
-//     {
-//         id: uuid(),
-//         name: "Liked Videos",
-//         vidoesList: [
-//             {
-//                     id: uuid(),
-//                     title: "How to LAYER SUNSCREEN",
-//                     channelName: "Dr Dray",
-//                     channelImgUrl: "https://yt3.ggpht.com/ytc/AAUvwniJWOQ8tHB0c8oFsbegmrdZGxqhe_OQz1plEDFT7w=s48-c-k-c0x00ffffff-no-rj",
-//                     videoUrl: "https://www.youtube.com/watch?v=qvw-5F6iIeM"
-//             },
-//         ]
-
-//     },
-//     {
-//         id: uuid(),
-//         name: "Liked Videos",
-//         vidoesList: [
-//             {
-//                 id: uuid(),
-//                 title: "Skincare Routine Using Only The Ordinary",
-//                 channelName: "James Welsh",
-//                 channelImgUrl: "https://yt3.ggpht.com/ytc/AAUvwng9tu6cQGJT0VtdV_iA3ZKycTkC-lsxAFbAaoE9lg=s48-c-k-c0x00ffffff-no-rj",
-//                 videoUrl: "https://www.youtube.com/watch?v=nvfvq-pFMwI"
-//             },
-           
-//         ]
-
-//     }
-// ]
