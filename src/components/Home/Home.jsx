@@ -21,9 +21,7 @@ export default function Home(){
         if (success) {
             setVideosList(data);
             setLoading(false);
-        } else {
-          console.error("something went worng.");
-        }
+        } 
       } catch (err) {
         console.error(err);
         setLoading(false);
