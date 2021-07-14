@@ -118,7 +118,7 @@ export function PlaylistProvider({children}){
            })
           }
         } catch(err) {
-          console.error(err);
+          console.error(err.message);
         }
       }
     }
@@ -136,7 +136,7 @@ export function PlaylistProvider({children}){
           })
         } 
        } catch(err) {
-         console.error(err);
+         console.error(err.message);
        }
   }
   const handleAddVideo = async(playlistId, videoId, videoObject) => {
@@ -152,7 +152,7 @@ export function PlaylistProvider({children}){
       })
       } 
      } catch(err) {
-       console.error(err);
+       console.error(err.message);
      }
 }
   
@@ -194,7 +194,7 @@ export function PlaylistProvider({children}){
         } catch(err){
           console.log("errr");
           setLoading(false);
-          console.error(err);
+          console.error(err.message);
         }
       })();
       (async () => {
@@ -210,7 +210,7 @@ export function PlaylistProvider({children}){
           }
         } catch(err){
           setLoading(false);
-          console.error(err);
+          console.error(err.message);
         }
       })();
     }
