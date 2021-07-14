@@ -192,7 +192,6 @@ export function PlaylistProvider({children}){
             setWatchHistoryVideos({watchHistoryVideos: data.historyVideos})
           }
         } catch(err){
-          console.log("errr");
           setLoading(false);
           console.error(err.message);
         }
