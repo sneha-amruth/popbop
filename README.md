@@ -1,1 +1,1 @@
-popbop is a video library app
+popbop is a video library app built using MERN stack
