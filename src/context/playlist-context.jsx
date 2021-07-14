@@ -186,7 +186,6 @@ export function PlaylistProvider({children}){
             endpoint: `/api/default`
           });
           if(success) {
-            console.log("in fetching liked "+data.likedVideos);
             setLoading(false);
             setLikedVideos({likedVideos: data.likedVideos});
             setWatchLaterVideos({watchLaterVideos: data.watchLater});

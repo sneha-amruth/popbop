@@ -88,6 +88,7 @@
    color: var(--text-primary);
    border-right: none;
    outline: none;
+   width: 14rem;
    border-bottom: 0.16rem solid var(--text-primary);
 }
 .modal-footer .input-box::placeholder {

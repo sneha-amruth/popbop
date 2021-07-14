@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePlaylist, ACTIONS } from "../../context/playlist-context";
 import { useAuth } from "../../context/auth-context";
 import { restAPICalls } from "../../utils/CallRestAPI";
+import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 
 export default function Modal(props){
@@ -14,8 +15,12 @@ export default function Modal(props){
     const [showInput, setShowInput] = useState(false);
     const [showRequiredError, setShowRequiredError] = useState(false);
     const {request} = restAPICalls();
+    const navigate = useNavigate();
 
     function handleModal(toggle){
+        if(!isUserLoggedIn){
+            navigate("/login");
+          }
         toggle ? setShowModal(true) : setShowModal(false);
         setShowInput(false);
         setShowRequiredError(false);
