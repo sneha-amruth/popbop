@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { usePlaylist, ACTIONS } from "../../context/playlist-context";
+import { usePlaylist } from "../../context/playlist-context";
+import { ACTIONS } from "../../context/playlistActions";
 import { useAuth } from "../../context/auth-context";
 import { restAPICalls } from "../../utils/CallRestAPI";
 import { useNavigate } from "react-router-dom";
@@ -100,13 +101,13 @@ return (
                  </> : ""}
             {showInput ?     
              <button onClick={() => handleCreate(playlistName,videoId)} className="btn btn-primary create-playlist" type="submit">CREATE</button> :
-             <button onClick={handleClick} className="btn btn-primary"><i class="fas fa-plus fa-xs"></i> Create new playlist</button> 
+             <button onClick={handleClick} className="btn btn-primary"><i className="fas fa-plus fa-xs"></i> Create new playlist</button> 
             }
            </div>
            </div>
         </div> : 
             <div className="save-btn">
-            <button onClick={() => handleModal(true)} className="btn btn-primary"><i class="fas fa-stream fa-lg"></i> SAVE</button>
+            <button onClick={() => handleModal(true)} className="btn btn-primary"><i className="fas fa-stream fa-lg"></i> SAVE</button>
             </div>
         }
         </>

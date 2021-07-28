@@ -1,6 +1,9 @@
 .btn-create {
     background-color: transparent;
     color: var(--white);
+    position: relative;
+    left: 1rem;
+    margin-top: 1rem;
 }
 .signup-form {
     margin: 5rem auto;

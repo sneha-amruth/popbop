@@ -22,6 +22,9 @@ export default function Login() {
      function loginHandler() {  
         loginUserWithCredentials(credentials.email, credentials.password);
     }
+    function handleGuestCredentials() {
+        setCredentials({email: "testuser@gmail.com", password: "testuser@12"});
+    }
     function handleChange(event){
         setRegisterError();
         const {name, value} = event.target;
@@ -47,12 +50,13 @@ export default function Login() {
             <h1>Login</h1>
             <div className="error-message">{registerError}</div>
             <label>Email </label>
-            <input type="text" name="email" onChange={handleChange} required className="input-box"/>
+            <input type="text" name="email" value={credentials.email} onChange={handleChange} required className="input-box"/>
             <label>Password </label>
-            <input type="password" name="password" onChange={handleChange} required className="input-box"/>
-            <button type="button" onClick={loginHandler} className="btn btn-primary btn-large">{isUserLoggedIn ? "logout" : "LOG IN"}</button>
-            <Link to="/register"><button type="button" className="btn btn-large btn-create">Create Account</button></Link> 
-            </div>
+            <input type="password" name="password" value={credentials.password} autoComplete="on" onChange={handleChange} required className="input-box"/>
+            <button type="button" onClick={loginHandler} className="btn btn-primary btn-large">LOG IN</button>
+            <button type="button" onClick={handleGuestCredentials} className="btn btn-primary btn-large">Use Guest Credentials</button>
+            <Link to="/register" className="create-link">Don't have an account? Sign Up</Link>
+          </div>
 }
         </>
     )

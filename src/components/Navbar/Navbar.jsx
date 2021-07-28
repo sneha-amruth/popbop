@@ -22,17 +22,17 @@ export default function Navbar(){
             <img src={logo} alt="logo" />
             <h1 className="brand-name">popbop</h1>
         </div>
-        <div className="search">
+        {/* <div className="search">
             <input name="search" placeholder="Search" className="search-box" />
             <button className="btn btn-icon search-icon"><i class="fas fa-search"></i></button>
-     </div>
+     </div> */}
         <div className="nav-links">
-            <Link to="/" className="nav-icons"><i class="fas fa-home fa-lg"></i></Link>
-            <Link to="/history" className="nav-icons"><i class="fas fa-history fa-lg"></i></Link>
-            <Link to="/liked" className="nav-icons"><i class="fas fa-thumbs-up fa-lg"></i></Link>
-            <Link to="/watch-later" className="nav-icons"><i class="fas fa-clock fa-lg"></i></Link>
-            <Link to="/playlist" className="nav-icons"><i class="fas fa-stream fa-lg"></i></Link>
-            <Link to="/account" className="nav-icons"><i class="fas fa-user fa-lg "></i></Link>
+            <Link to="/" className="nav-icons"><i className="fas fa-home fa-lg"></i></Link>
+            <Link to="/history" className="nav-icons"><i className="fas fa-history fa-lg"></i></Link>
+            <Link to="/liked" className="nav-icons"><i className="fas fa-thumbs-up fa-lg"></i></Link>
+            <Link to="/watch-later" className="nav-icons"><i className="fas fa-clock fa-lg"></i></Link>
+            <Link to="/playlist" className="nav-icons"><i className="fas fa-stream fa-lg"></i></Link>
+            <Link to="/account" className="nav-icons"><i className="fas fa-user fa-lg "></i></Link>
         </div>
      </div>
      <div className="side-nav">
@@ -53,7 +53,7 @@ export default function Navbar(){
                 <div className="nav-name">Watch later</div>
             </NavLink>
             <NavLink end to="/playlist" className="nav-icons" activeClassName="nav-icons-active">
-                <i class="fas fa-stream fa-lg"></i> 
+                <i className="fas fa-stream fa-lg"></i> 
                 <div className="nav-name">Playlist </div>
             </NavLink>
      </div>

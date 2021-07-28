@@ -28,7 +28,7 @@ export default function Home(){
       }
      
     })();
-   
+   // eslint-disable-next-line
   }, []);
 
     return (
@@ -37,7 +37,7 @@ export default function Home(){
         <div className="videos-list">
         {!isLoading && videosList && videosList.map(
          video => (
-            <VideosListing value={video}/>
+            <VideosListing key={video._id} value={video}/>
           )
         )}
       </div>

@@ -1,6 +1,7 @@
 import "./VideosListing.css";
 import { Link } from "react-router-dom";
-import { usePlaylist, ACTIONS } from "../../context/playlist-context";
+import { usePlaylist } from "../../context/playlist-context";
+import { ACTIONS } from "../../context/playlistActions";
 
 export default function VideosListing(props){
     const id = props.value?._id;

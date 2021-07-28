@@ -1,4 +1,5 @@
-import { usePlaylist, ACTIONS } from "../../context/playlist-context";
+import { usePlaylist } from "../../context/playlist-context";
+import { ACTIONS } from "../../context/playlistActions";
 import VideosListing from "../Videos/VideosListing";
 import { restAPICalls } from "../../utils/CallRestAPI";
 import "./Playlists.css";

@@ -34,3 +34,9 @@
 .error-message:empty {
     display: none;
 }
+.create-link {
+    /* text-decoration: none; */
+    color: #fff6f6;
+    text-align: right;
+    padding: 0.8rem;
+}

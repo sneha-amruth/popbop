@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./SignUp.css";
 import { useState } from "react";
 import { useAuth } from "../../context/auth-context";
@@ -11,6 +12,11 @@ export default function SignUp(){
         email: "",
         password: ""
     })
+
+    useEffect(() => {
+        setLoginError("");
+        // eslint-disable-next-line
+    }, [])
 
     const handleCreate = () => {
         const regexExp = /^\S+@\S+$/;
@@ -69,7 +75,7 @@ export default function SignUp(){
     <input type="text" name="lastName" onChange={handleChange} required className="input-box" placeholder="Last Name"/>
     <input type="text" name="email" onChange={handleChange}  required className="input-box" placeholder="Email"/>
     <input type="password" name="password" onChange={handleChange} required className="input-box" placeholder="Password"/>       
-    <button type="button" onClick={handleCreate} className="btn btn-large">Create</button>
+    <button type="button" onClick={handleCreate} className="btn btn-large btn-create">CREATE ACCOUNT</button>
     </div>
     )
 }

@@ -1,7 +1,8 @@
 import ReactPlayer from "react-player";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { usePlaylist, ACTIONS } from "../../context/playlist-context";
+import { usePlaylist } from "../../context/playlist-context";
+import { ACTIONS } from "../../context/playlistActions";
 import Modal from "../Modal/Modal";
 import Loader  from "../Loader/Loader";
 import { useLoader } from "../../context/loader-context";
@@ -49,7 +50,7 @@ export default function VideoDetailPage(){
       }
      
     })();
-   
+   // eslint-disable-next-line
   }, []);
 
   function handleLike(videoId){
