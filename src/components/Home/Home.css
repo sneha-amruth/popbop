@@ -17,7 +17,10 @@
     background-color: var(--main-body-background);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 480px) {
+    .all-videos-conatiner {
+        left: 0;
+    }
     .videos-list {
        left: 0;
     }

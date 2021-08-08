@@ -43,10 +43,11 @@
   }
 
 @media only screen and (max-width: 600px) {
+  
   .card {
     border: none;
     width: 25.7rem;
-    height: 25rem;
+    height: 23.2rem;
     margin: 0;
   }
 }

@@ -39,3 +39,11 @@
 .video-play .save-video button {
     color: var(--text-primary);
 }
+
+
+@media only screen and (max-width: 480px) {
+    .video-player-container {
+        left: 0;
+        top: 7rem;
+    }
+}
