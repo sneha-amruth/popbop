@@ -23,7 +23,7 @@ export default function Login() {
         loginUserWithCredentials(credentials.email, credentials.password);
     }
     function handleGuestCredentials() {
-        setCredentials({email: "testuser@gmail.com", password: "testuser@12"});
+        loginUserWithCredentials("testuser@gmail.com", "testuser@12");
     }
     function handleChange(event){
         setRegisterError();
