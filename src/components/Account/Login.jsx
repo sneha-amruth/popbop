@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-    const {isUserLoggedIn, loginUserWithCredentials, registerError,setRegisterError} = useAuth();
+    const {isUserLoggedIn, loginUserWithCredentials, loginError, setLoginError} = useAuth();
     const [credentials, setCredentials] = useState({
         email: "",
         password: ""
@@ -26,7 +26,7 @@ export default function Login() {
         loginUserWithCredentials("testuser@gmail.com", "testuser@12");
     }
     function handleChange(event){
-        setRegisterError();
+        setLoginError();
         const {name, value} = event.target;
        
             setCredentials((prevVal) => {
@@ -48,7 +48,7 @@ export default function Login() {
         <> {isLoading && <Loader />}
            {!isLoading && <div className="login-form">
             <h1>Login</h1>
-            <div className="error-message">{registerError}</div>
+            <div className="error-message">{loginError}</div>
             <label>Email </label>
             <input type="text" name="email" value={credentials.email} onChange={handleChange} required className="input-box"/>
             <label>Password </label>
