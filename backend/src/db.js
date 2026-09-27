@@ -185,17 +185,20 @@ function seedIfEmpty(db) {
       `INSERT INTO videos (id, title, channelName, thumbnail, channelImgUrl, videoUrl, viewCount)
        VALUES (?, ?, ?, ?, ?, ?, ?)`
     );
-    for (const v of SEED_VIDEOS) {
-      insert.run(
-        crypto.randomUUID(),
-        v.title,
-        v.channelName,
-        v.thumbnail,
-        v.channelImgUrl,
-        v.videoUrl,
-        v.viewCount
-      );
-    }
+    const insertAll = db.transaction((videos) => {
+      for (const v of videos) {
+        insert.run(
+          crypto.randomUUID(),
+          v.title,
+          v.channelName,
+          v.thumbnail,
+          v.channelImgUrl,
+          v.videoUrl,
+          v.viewCount
+        );
+      }
+    });
+    insertAll(SEED_VIDEOS);
   }
 
   const existingGuest = db
@@ -219,7 +222,10 @@ function seedIfEmpty(db) {
 
 function createDb(filename) {
   const db = new Database(filename);
-  db.pragma("journal_mode = WAL");
+  db.pragma("foreign_keys = ON");
+  if (filename !== ":memory:") {
+    db.pragma("journal_mode = WAL");
+  }
   initSchema(db);
   seedIfEmpty(db);
   return db;
