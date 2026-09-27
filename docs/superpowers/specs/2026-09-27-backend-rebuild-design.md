@@ -163,11 +163,22 @@ history_videos (
 | `DELETE /api/playlist/:playlistId` | Yes | Deletes the playlist and its `playlist_videos` rows. HTTP 403 `{success:false}` if the playlist isn't owned by `req.userId` |
 | `POST /api/playlist/:playlistId/:videoId` | Yes | Adds the video to the playlist (ownership-checked, 403 as above). `{success:true}` |
 | `DELETE /api/playlist/:playlistId/:videoId` | Yes | Removes the video from the playlist (ownership-checked). `{success:true}` |
-| `POST /api/liked/:videoId` | Yes | Adds to `liked_videos` for `req.userId`. `{success:true, data:updatedLikedList}` |
-| `DELETE /api/liked/:videoId` | Yes | Removes from `liked_videos`. `{success:true}` |
-| `POST /api/watch-later/:videoId` | Yes | Adds to `watch_later_videos`. `{success:true, data:updatedList}` |
-| `DELETE /api/watch-later/:videoId` | Yes | Removes from `watch_later_videos`. `{success:true}` |
-| `POST /api/history/:videoId` | Yes | Appends a row to `history_videos`. `{success:true}` |
+| `POST /api/liked/:videoId` | Yes | Adds to `liked_videos` for `req.userId`. `{success:true, data:video}` — the single toggled video, NOT the updated list (see correction below) |
+| `DELETE /api/liked/:videoId` | Yes | Removes from `liked_videos`. `{success:true, data:video}` — same single-video shape |
+| `POST /api/watch-later/:videoId` | Yes | Adds to `watch_later_videos`. `{success:true, data:video}` — single video, not the updated list |
+| `DELETE /api/watch-later/:videoId` | Yes | Removes from `watch_later_videos`. `{success:true, data:video}` — single video |
+| `POST /api/history/:videoId` | Yes | Appends a row to `history_videos`. `{success:true, data:video}` — the single video, not an empty body |
+
+**Correction (found during final implementation review, fixed in commit `be2873b`):**
+the original version of this table specified `data:updatedLikedList` / `data:updatedList` for
+the liked/watch-later toggle routes, and no `data` field at all for the history route. That
+was wrong — it did not match the frontend's actual contract. `src/context/playlist-context.jsx`'s
+`handleToggle` dispatches `payload: data` directly, and `src/context/playlistReducer.jsx`'s
+`ADD_TO_LIKED`/`ADD_TO_WATCH_LATER`/`ADD_TO_HISTORY` do `[...list, action.payload]` (expecting
+one video object), while the `REMOVE_FROM_*` actions do `.filter(v => v._id !== action.payload._id)`
+(also expecting one object, not a list). Returning the full list or omitting `data` corrupted
+client state after every like/watch-later/history action. All five routes now return the single
+toggled video's DTO in `data`, with a 404 if the video id doesn't exist.
 
 Ownership checks on playlist mutation routes are a deliberate addition beyond
 whatever the original backend did — they close an obvious gap (any authenticated
@@ -230,6 +241,11 @@ dev-only env override).
 - Given a video is liked via `POST /api/liked/:videoId` and then unliked via
   `DELETE /api/liked/:videoId`, a subsequent `GET /api/default` reflects both
   the addition and the removal.
+- Given `POST /api/liked/:videoId` (or `DELETE`, or `POST /api/watch-later/:videoId`,
+  or `POST /api/history/:videoId`) succeeds, the response's `data` field is the
+  single toggled video object (matching `_id` to the requested `videoId`), never
+  an array and never absent — this is what the frontend's reducer dispatches
+  directly into its state.
 - Given the server restarts against an empty database, boot seeds exactly 13
   videos and 1 guest user; given it restarts again against a non-empty database,
   no duplicate rows are inserted.
