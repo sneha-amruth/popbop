@@ -12,6 +12,11 @@ const db = createDb(dbPath);
 const app = createApp(db);
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`popbop backend listening on port ${port}`);
+});
+
+server.on("error", (err) => {
+  console.error(`Failed to start server: ${err.message}`);
+  process.exit(1);
 });
