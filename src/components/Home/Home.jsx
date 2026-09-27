@@ -20,8 +20,8 @@ export default function Home(){
         });
         if (success) {
             setVideosList(data);
-            setLoading(false);
-        } 
+        }
+        setLoading(false);
       } catch (err) {
         console.error(err);
         setLoading(false);

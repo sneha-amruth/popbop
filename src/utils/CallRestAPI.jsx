@@ -1,7 +1,4 @@
 import axios from "axios";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const API = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
@@ -35,10 +32,11 @@ export const restAPICalls = () => {
             return res.data;
           }
           default:
-            return null;
+            return { success: false, data: null };
         }
       } catch (error) {
         console.error(error);
+        return { success: false, data: null };
       }
     };
     return { request };
