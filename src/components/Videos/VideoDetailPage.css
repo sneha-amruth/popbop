@@ -8,7 +8,6 @@
     color: var(--blue);
 }
 .video-player-container {
-    /* border: 2px solid red; */
     position: absolute;
     left: 16rem;
     top: 8rem;
