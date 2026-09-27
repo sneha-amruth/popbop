@@ -42,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "@babel/core": "^7.22.0",
+    "eslint-plugin-jest": "24.1.0"
   }
 }
