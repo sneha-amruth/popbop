@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: popbop-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGIN
+        value: https://popbop.netlify.app,http://localhost:3000

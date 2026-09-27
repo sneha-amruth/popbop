@@ -40,10 +40,10 @@ export default function VideoDetailPage(){
         });
         if (success) {
           setVideoDetails(data);
-            setLoading(false);
         } else {
           console.error("something went worng.");
         }
+        setLoading(false);
       } catch (err) {
         console.error(err);
         setLoading(false);

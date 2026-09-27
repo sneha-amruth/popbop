@@ -1,0 +1,6 @@
+node_modules
+popbop.db
+popbop.db-journal
+popbop.db-wal
+popbop.db-shm
+.env

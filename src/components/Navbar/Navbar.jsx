@@ -36,24 +36,24 @@ export default function Navbar(){
         </div>
      </div>
      <div className="side-nav">
-            <NavLink end to="/" className="nav-icons" activeClassName="nav-icons-active">
-                <i class="fas fa-home fa-lg"></i> 
+            <NavLink end to="/" className={({isActive}) => isActive ? "nav-icons nav-icons-active" : "nav-icons"}>
+                <i className="fas fa-home fa-lg"></i>
                 <div className="nav-name">Home </div>
             </NavLink>
-            <NavLink end to="/history" className="nav-icons" activeClassName="nav-icons-active">
-                <i class="fas fa-history fa-lg"> </i>
+            <NavLink end to="/history" className={({isActive}) => isActive ? "nav-icons nav-icons-active" : "nav-icons"}>
+                <i className="fas fa-history fa-lg"> </i>
                 <div className="nav-name">History </div>
             </NavLink>
-            <NavLink end to="/liked" className="nav-icons" activeClassName="nav-icons-active">
-                <i class="fas fa-thumbs-up fa-lg"></i> 
+            <NavLink end to="/liked" className={({isActive}) => isActive ? "nav-icons nav-icons-active" : "nav-icons"}>
+                <i className="fas fa-thumbs-up fa-lg"></i>
                 <div className="nav-name">Liked videos </div>
             </NavLink>
-            <NavLink end to="/watch-later" className="nav-icons" activeClassName="nav-icons-active">
-                <i class="fas fa-clock fa-lg"></i> 
+            <NavLink end to="/watch-later" className={({isActive}) => isActive ? "nav-icons nav-icons-active" : "nav-icons"}>
+                <i className="fas fa-clock fa-lg"></i>
                 <div className="nav-name">Watch later</div>
             </NavLink>
-            <NavLink end to="/playlist" className="nav-icons" activeClassName="nav-icons-active">
-                <i className="fas fa-stream fa-lg"></i> 
+            <NavLink end to="/playlist" className={({isActive}) => isActive ? "nav-icons nav-icons-active" : "nav-icons"}>
+                <i className="fas fa-stream fa-lg"></i>
                 <div className="nav-name">Playlist </div>
             </NavLink>
      </div>
@@ -61,13 +61,13 @@ export default function Navbar(){
       <Routes>
         <Route path="/" element={<Home/>}> </Route>
         <Route path="/video/:videoId" element={<VideoDetailPage/>}></Route>
-        <PrivateRoute path="/history">{<History/>} </PrivateRoute>
-        <PrivateRoute path="/liked">{<LikedVideos/>} </PrivateRoute>
-        <PrivateRoute path="/watch-later">{<WatchLater/>} </PrivateRoute>
-        <PrivateRoute path="/playlist">{<Playlists/>} </PrivateRoute>
+        <Route path="/history" element={<PrivateRoute><History/></PrivateRoute>} />
+        <Route path="/liked" element={<PrivateRoute><LikedVideos/></PrivateRoute>} />
+        <Route path="/watch-later" element={<PrivateRoute><WatchLater/></PrivateRoute>} />
+        <Route path="/playlist" element={<PrivateRoute><Playlists/></PrivateRoute>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<SignUp/>} />
-        <PrivateRoute path="/account" element={<Account/>} />
+        <Route path="/account" element={<PrivateRoute><Account/></PrivateRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
