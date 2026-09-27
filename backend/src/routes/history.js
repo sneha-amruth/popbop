@@ -22,7 +22,13 @@ function historyRouter(db) {
     db.prepare(
       `INSERT INTO history_videos (userId, videoId, watchedAt) VALUES (?, ?, ?)`
     ).run(req.userId, req.params.videoId, new Date().toISOString());
-    res.json({ success: true });
+    const video = db
+      .prepare("SELECT * FROM videos WHERE id = ?")
+      .get(req.params.videoId);
+    if (!video) {
+      return res.status(404).json({ success: false });
+    }
+    res.json({ success: true, data: toVideoDto(video) });
   });
 
   return router;

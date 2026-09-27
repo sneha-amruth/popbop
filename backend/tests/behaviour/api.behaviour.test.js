@@ -139,21 +139,54 @@ describe("popbop backend behaviour", () => {
     const videosRes = await request(app).get("/api/video");
     const videoId = videosRes.body.data[0]._id;
 
-    await request(app)
+    const likeRes = await request(app)
       .post(`/api/liked/${videoId}`)
       .set("Authorization", token);
+    expect(likeRes.body.success).toBe(true);
+    expect(Array.isArray(likeRes.body.data)).toBe(false);
+    expect(likeRes.body.data._id).toBe(videoId);
+
     const afterLike = await request(app)
       .get("/api/default")
       .set("Authorization", token);
     expect(afterLike.body.data.likedVideos.some((v) => v._id === videoId)).toBe(true);
 
-    await request(app)
+    const unlikeRes = await request(app)
       .delete(`/api/liked/${videoId}`)
       .set("Authorization", token);
+    expect(unlikeRes.body.success).toBe(true);
+    expect(Array.isArray(unlikeRes.body.data)).toBe(false);
+    expect(unlikeRes.body.data._id).toBe(videoId);
+
     const afterUnlike = await request(app)
       .get("/api/default")
       .set("Authorization", token);
     expect(afterUnlike.body.data.likedVideos.some((v) => v._id === videoId)).toBe(false);
+  });
+
+  test("posting to /api/history/:videoId returns a single video DTO in data", async () => {
+    const { app } = freshApp();
+    const login = await request(app)
+      .post("/api/user/login")
+      .send({ email: GUEST_EMAIL, password: GUEST_PASSWORD });
+    const token = login.body.token;
+
+    const videosRes = await request(app).get("/api/video");
+    const videoId = videosRes.body.data[0]._id;
+
+    const historyRes = await request(app)
+      .post(`/api/history/${videoId}`)
+      .set("Authorization", token);
+    expect(historyRes.body.success).toBe(true);
+    expect(Array.isArray(historyRes.body.data)).toBe(false);
+    expect(historyRes.body.data._id).toBe(videoId);
+
+    const afterHistory = await request(app)
+      .get("/api/default")
+      .set("Authorization", token);
+    expect(
+      afterHistory.body.data.historyVideos.some((v) => v._id === videoId)
+    ).toBe(true);
   });
 
   test("restarting against an empty db seeds exactly once; restarting again does not duplicate", () => {
